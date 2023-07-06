@@ -76,8 +76,9 @@ const resultDisplay = document.getElementById('result')
 let squares = [] 
 const width = 3
 let score = 0
+const container = document.getElementById('board')
 
-      const container = document.getElementById('board')
+const textboard = document.getElementById('textboard')
 
   function doSomethingOnClick(bild) { alert('Clicked it!' + bild); }
   function removeElement(id) {
@@ -138,7 +139,7 @@ let score = 0
       bild.setAttribute("src", "bilder/" + randomNumber + ".jpeg");
       bild.setAttribute("height", "100%");
       bild.setAttribute("width", "100%");
-      bild.setAttribute("alt", rutor[randomNumber]);
+      bild.setAttribute("title", rutor[randomNumber]);
       bild.setAttribute("object-fit", "contain");
 
       // bild.setAttribute("class", "overlayImage");
@@ -156,7 +157,26 @@ let score = 0
       cell.appendChild(link);
       // cell.innerText = (c + 1);
       container.appendChild(cell).className = "grid-item";
+      
+      
+      // //Text rutor
+      // let textcell = document.createElement("div");
+      // textcell.innerText = rutor[randomNumber];
+      // textboard.appendChild(textcell).className = "grid-item";
+      // textboard.style.setProperty('--grid-rows', rows);
+      // textboard.style.setProperty('--grid-cols', cols);
     };
+    var ii = 0;
+    for (r = 0; r<rows;r++) {
+        let row = textboard.insertRow();
+        for (c = 0; c<cols;c++) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(nummer[ii]);
+            ii++;
+            cell.appendChild(text);
+        }
+    }
+
   };
 
   makeRows(3, 3);

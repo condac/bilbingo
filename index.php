@@ -7,6 +7,7 @@
     <script src="script.js" charset="utf-8"></script>
   </head>
   <body>
+
     <div class="container">
       <div class="info">
         <h1>Britt-Maries Bilbingo</h1>
@@ -15,9 +16,12 @@
           <span id="score">0</span>
         </div> -->
       </div>
-      <div class="gri2d"></div>
+
       <div id="board"></div>
+      <table id="textboard" class="textboard"></table>
     </div>
+
+
   </body>
 </html>
 
