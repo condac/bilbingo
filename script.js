@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Check for seed parameter in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const seedParam = urlParams.get('seed');
+
+  let initialSeed;
+  if (!seedParam) {
+    // No seed parameter, generate a random one and redirect
+    initialSeed = Math.floor(Math.random() * 1000000);
+    window.location.href = window.location.pathname + '?seed=' + initialSeed;
+    return; // Stop execution, page will reload with seed
+  } else {
+    initialSeed = parseInt(seedParam, 10);
+    if (isNaN(initialSeed)) {
+      // Invalid seed, generate random and redirect
+      initialSeed = Math.floor(Math.random() * 1000000);
+      window.location.href = window.location.pathname + '?seed=' + initialSeed;
+      return;
+    }
+  }
 
   const rutor = [ "noll",  "häst", "cykel", "telefon",
      "takbox",
@@ -80,6 +99,15 @@ const container = document.getElementById('board')
 
 const textboard = document.getElementById('textboard')
 
+  // Seed for reproducible random results - initialized from URL parameter
+  let randomSeed = initialSeed
+
+  // Simple seeded random function (returns value between 0 and 1, like Math.random)
+  function seededRandom() {
+    randomSeed = (randomSeed * 1103515245 + 12345) & 0x7fffffff
+    return randomSeed / 0x7fffffff
+  }
+
   function doSomethingOnClick(bild) { alert('Clicked it!' + bild); }
   function removeElement(id) {
     var elem = document.getElementById(id);
@@ -112,7 +140,7 @@ const textboard = document.getElementById('textboard')
 
   function getNewUniqeNumber(list) {
     for (x = 0; x < 1000; x++) {
-      randomNumber = Math.floor(Math.random() * 72) + 1
+      randomNumber = Math.floor(seededRandom() * 72) + 1
       if (list.includes(rutor[randomNumber])) {
       }
       else {
@@ -181,3 +209,9 @@ const textboard = document.getElementById('textboard')
 
   makeRows(3, 3);
 })
+
+// Global function to get a new board with a new seed
+function getNewBoard() {
+  const newSeed = Math.floor(Math.random() * 1000000);
+  window.location.href = window.location.pathname + '?seed=' + newSeed;
+}
